@@ -6,7 +6,7 @@ from textual.app import ComposeResult
 from textual.widget import Widget
 from textual.widgets import Markdown, Static, TabbedContent, TabPane
 
-from openapi_tools.tui._utils import get_method_color
+from openapi_kit.tui._utils import get_method_color
 
 from ..._diff import ChangeType
 from ..._parser import (

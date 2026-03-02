@@ -521,7 +521,7 @@ wheels = [
 ]
 
 [[package]]
-name = "openapi-tools"
+name = "openapi-kit"
 source = { editable = "." }
 dependencies = [
     { name = "click" },

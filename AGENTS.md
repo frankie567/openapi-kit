@@ -1,6 +1,6 @@
 # Agent Instructions
 
-This document provides essential guidance for AI agents contributing to OpenAPI Tools. Imagine this file as a new joiner to the team who needs to understand the coding standards, practices, and conventions used in this repository.
+This document provides essential guidance for AI agents contributing to OpenAPI Kit. Imagine this file as a new joiner to the team who needs to understand the coding standards, practices, and conventions used in this repository.
 
 ## General Guidelines
 

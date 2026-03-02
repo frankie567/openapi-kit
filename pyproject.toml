@@ -1,8 +1,8 @@
 
 [project]
-name = "openapi-tools"
+name = "openapi-kit"
 authors = [
-  { name = "openapi-tools", email = "hello@fvoron.com" }
+  { name = "openapi-kit", email = "hello@fvoron.com" }
 ]
 description = "Python tools to work with OpenAPI schemas"
 readme = "README.md"
@@ -21,11 +21,11 @@ dependencies = [
 ]
 
 [project.scripts]
-openapi-tools = "openapi_tools._cli:main"
+openapi-kit = "openapi_kit._cli:main"
 
 [project.urls]
-Documentation = "https://frankie567.github.io/openapi-tools/"
-Source = "https://github.com/frankie567/openapi-tools"
+Documentation = "https://frankie567.github.io/openapi-kit/"
+Source = "https://github.com/frankie567/openapi-kit"
 
 [build-system]
 requires = ["hatchling", "hatch-regex-commit"]
@@ -34,7 +34,7 @@ build-backend = "hatchling.build"
 [tool.hatch.version]
 source = "regex_commit"
 commit_extra_args = ["-e"]
-path = "openapi_tools/__init__.py"
+path = "openapi_kit/__init__.py"
 
 [dependency-groups]
 dev = [
@@ -54,7 +54,7 @@ target-version = "py314"
 extend-select = ["I", "TRY", "UP"]
 
 [tool.pytest.ini_options]
-addopts = "--cov=openapi_tools/ --cov-report=term-missing"
+addopts = "--cov=openapi_kit/ --cov-report=term-missing"
 
 
 [tool.uv]

@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from openapi_tools._diff import (
+from openapi_kit._diff import (
     APIDiff,
     ChangeType,
     OperationChange,
@@ -12,7 +12,7 @@ from openapi_tools._diff import (
     to_json,
     to_markdown,
 )
-from openapi_tools._parser import OpenAPIParser
+from openapi_kit._parser import OpenAPIParser
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

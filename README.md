@@ -1,18 +1,18 @@
-# OpenAPI Tools
+# OpenAPI Kit
 
 <p align="center">
     <em>Python tools to work with OpenAPI schemas</em>
 </p>
 
-[![build](https://github.com/frankie567/openapi-tools/workflows/Build/badge.svg)](https://github.com/frankie567/openapi-tools/actions)
-[![codecov](https://codecov.io/gh/frankie567/openapi-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/frankie567/openapi-tools)
-[![PyPI version](https://badge.fury.io/py/openapi-tools.svg)](https://badge.fury.io/py/openapi-tools)
+[![build](https://github.com/frankie567/openapi-kit/workflows/Build/badge.svg)](https://github.com/frankie567/openapi-kit/actions)
+[![codecov](https://codecov.io/gh/frankie567/openapi-kit/branch/master/graph/badge.svg)](https://codecov.io/gh/frankie567/openapi-kit)
+[![PyPI version](https://badge.fury.io/py/openapi-kit.svg)](https://badge.fury.io/py/openapi-kit)
 
 ---
 
-**Documentation**: <a href="https://frankie567.github.io/openapi-tools/" target="_blank">https://frankie567.github.io/openapi-tools/</a>
+**Documentation**: <a href="https://frankie567.github.io/openapi-kit/" target="_blank">https://frankie567.github.io/openapi-kit/</a>
 
-**Source Code**: <a href="https://github.com/frankie567/openapi-tools" target="_blank">https://github.com/frankie567/openapi-tools</a>
+**Source Code**: <a href="https://github.com/frankie567/openapi-kit" target="_blank">https://github.com/frankie567/openapi-kit</a>
 
 ---
 
@@ -21,13 +21,13 @@
 Explore any OpenAPI schema right in your terminal — no browser required.
 
 ```bash
-uvx openapi-tools view https://petstore3.swagger.io/api/v3/openapi.json
+uvx openapi-kit view https://petstore3.swagger.io/api/v3/openapi.json
 ```
 
 You can also point it at a local file:
 
 ```bash
-uvx openapi-tools view ./my-api.yaml
+uvx openapi-kit view ./my-api.yaml
 ```
 
 ### Features
@@ -61,17 +61,17 @@ uvx openapi-tools view ./my-api.yaml
 Compare two OpenAPI schemas and output the differences.
 
 ```bash
-uvx openapi-tools diff ./v1.yaml ./v2.yaml
+uvx openapi-kit diff ./v1.yaml ./v2.yaml
 ```
 
 The diff command supports both JSON and Markdown output formats:
 
 ```bash
 # Markdown output (default)
-uvx openapi-tools diff ./v1.yaml ./v2.yaml
+uvx openapi-kit diff ./v1.yaml ./v2.yaml
 
 # JSON output
-uvx openapi-tools diff ./v1.yaml ./v2.yaml --format json
+uvx openapi-kit diff ./v1.yaml ./v2.yaml --format json
 ```
 
 ### Features

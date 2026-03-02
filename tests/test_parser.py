@@ -4,7 +4,7 @@ import openapi_pydantic.v3.v3_0 as _v30
 import openapi_pydantic.v3.v3_1 as _v31
 import pytest
 
-from openapi_tools._parser import (
+from openapi_kit._parser import (
     Method,
     OpenAPIParser,
     Schema,

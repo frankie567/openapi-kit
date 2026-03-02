@@ -6,12 +6,12 @@ install:
 lint:
     uv run ruff format .
     uv run ruff check --fix .
-    uv run mypy openapi_tools/
+    uv run mypy openapi_kit/
 
 lint-check:
     uv run ruff format --check .
     uv run ruff check .
-    uv run mypy openapi_tools/
+    uv run mypy openapi_kit/
 
 test:
     uv run pytest
@@ -26,4 +26,4 @@ docs-build:
     uv run mkdocs build
 
 version bump:
-    uvx hatch version {{bump}}
+    uvx hatch version {{ bump }}

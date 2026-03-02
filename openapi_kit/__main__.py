@@ -1,4 +1,4 @@
-"""Entry point for python -m openapi_tools."""
+"""Entry point for python -m openapi_kit."""
 
 from ._cli import main
 

@@ -1,4 +1,4 @@
-"""CLI entry point for openapi-tools."""
+"""CLI entry point for openapi-kit."""
 
 from __future__ import annotations
 
