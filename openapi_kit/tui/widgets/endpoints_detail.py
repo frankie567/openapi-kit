@@ -6,9 +6,7 @@ from textual.app import ComposeResult
 from textual.widget import Widget
 from textual.widgets import Markdown, Static, TabbedContent, TabPane
 
-from openapi_kit.tui._utils import get_method_color
-
-from ..._parser import (
+from openapi_kit._parser import (
     Endpoint,
     Method,
     OpenAPIParser,
@@ -18,8 +16,9 @@ from ..._parser import (
     Responses,
     Schema,
 )
-from ...diff import ChangeType
-from .._diff_service import DiffService
+from openapi_kit.diff import ChangeType
+from openapi_kit.tui._diff_service import DiffService
+from openapi_kit.tui._utils import get_method_color
 
 _REFERENCE_TYPES = (_v30.Reference, _v31.Reference)
 

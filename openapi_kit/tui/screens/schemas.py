@@ -2,9 +2,9 @@ from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.widgets import Footer, Header
 
-from ..._parser import NamedSchema, OpenAPIParser
-from .._diff_service import DiffService
-from ..widgets.schemas_list import SchemaDetail, SchemasList
+from openapi_kit._parser import NamedSchema, OpenAPIParser
+from openapi_kit.tui._diff_service import DiffService
+from openapi_kit.tui.widgets.schemas_list import SchemaDetail, SchemasList
 
 
 class SchemasScreen(Screen[None]):

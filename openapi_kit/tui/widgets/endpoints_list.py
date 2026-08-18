@@ -5,9 +5,9 @@ from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Tree
 
-from ..._parser import Endpoint, Method, OpenAPIParser
-from .._diff_service import DiffService
-from .._utils import get_method_color
+from openapi_kit._parser import Endpoint, Method, OpenAPIParser
+from openapi_kit.tui._diff_service import DiffService
+from openapi_kit.tui._utils import get_method_color
 
 
 def _method_markup(method: Method) -> str:

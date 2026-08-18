@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from .._parser import Endpoint, OpenAPIParser
-from ..diff import (
+from openapi_kit._parser import Endpoint, OpenAPIParser
+from openapi_kit.diff import (
     APIDiff,
     ChangeType,
     OperationChange,
