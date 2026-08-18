@@ -12,8 +12,8 @@ from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Markdown, Static, Tree
 
-from ..._diff import ChangeType, SchemaPropertyChange
 from ..._parser import NamedSchema, OpenAPIParser, Schema
+from ...diff import ChangeType, SchemaPropertyChange
 from .._diff_service import DiffService
 
 _REFERENCE_TYPES = (_v30.Reference, _v31.Reference)

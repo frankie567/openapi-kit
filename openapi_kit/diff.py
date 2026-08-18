@@ -1,4 +1,4 @@
-"""OpenAPI schema diff utilities."""
+"""Public API for comparing OpenAPI documents."""
 
 from __future__ import annotations
 
@@ -18,18 +18,43 @@ _PARAMETER_COMPARABLE_FIELDS = ("required", "description", "deprecated")
 
 
 class ChangeType(StrEnum):
+    """Type of change between the base and head OpenAPI documents.
+
+    Attributes:
+        ADDED: An item exists only in the head document.
+        REMOVED: An item exists only in the base document.
+        MODIFIED: An item exists in both documents but has changed.
+    """
+
     ADDED = "added"
     REMOVED = "removed"
     MODIFIED = "modified"
 
 
 class FieldChange(BaseModel):
+    """Change to a field on an OpenAPI object.
+
+    Attributes:
+        field: Name of the changed field.
+        old_value: Value in the base document.
+        new_value: Value in the head document.
+    """
+
     field: str
     old_value: Any = None
     new_value: Any = None
 
 
 class ParameterChange(BaseModel):
+    """Change to an operation parameter.
+
+    Attributes:
+        name: Parameter name.
+        location: Parameter location, such as ``path`` or ``query``.
+        change_type: Type of change to the parameter.
+        field_changes: Changes to fields on the parameter.
+    """
+
     name: str
     location: str
     change_type: ChangeType
@@ -37,17 +62,44 @@ class ParameterChange(BaseModel):
 
 
 class RequestBodyChange(BaseModel):
+    """Change to an operation request body.
+
+    Attributes:
+        change_type: Type of change to the request body.
+        field_changes: Changes to fields on the request body.
+    """
+
     change_type: ChangeType
     field_changes: list[FieldChange] = []
 
 
 class ResponseChange(BaseModel):
+    """Change to an operation response.
+
+    Attributes:
+        status_code: HTTP response status code or OpenAPI response key.
+        change_type: Type of change to the response.
+        field_changes: Changes to fields on the response.
+    """
+
     status_code: str
     change_type: ChangeType
     field_changes: list[FieldChange] = []
 
 
 class OperationChange(BaseModel):
+    """Change to an OpenAPI operation.
+
+    Attributes:
+        path: URL path of the operation.
+        method: Lowercase HTTP method of the operation.
+        change_type: Type of change to the operation.
+        parameter_changes: Changes to the operation's parameters.
+        request_body_change: Change to the request body, if any.
+        response_changes: Changes to the operation's responses.
+        affected_schema_changes: Names of changed schemas used by the operation.
+    """
+
     path: str
     method: str
     change_type: ChangeType
@@ -58,18 +110,41 @@ class OperationChange(BaseModel):
 
 
 class SchemaPropertyChange(BaseModel):
+    """Change to a schema property.
+
+    Attributes:
+        name: Property name.
+        change_type: Type of change to the property.
+        field_changes: Changes to fields on the property.
+    """
+
     name: str
     change_type: ChangeType
     field_changes: list[FieldChange] = []
 
 
 class SchemaChange(BaseModel):
+    """Change to an OpenAPI schema.
+
+    Attributes:
+        name: Schema name.
+        change_type: Type of change to the schema.
+        property_changes: Changes to properties on the schema.
+    """
+
     name: str
     change_type: ChangeType
     property_changes: list[SchemaPropertyChange] = []
 
 
 class APIDiff(BaseModel):
+    """Structured differences between two OpenAPI documents.
+
+    Attributes:
+        operation_changes: Added, removed, and modified operations.
+        schema_changes: Added, removed, and modified schemas.
+    """
+
     operation_changes: list[OperationChange] = []
     schema_changes: list[SchemaChange] = []
 
@@ -467,7 +542,15 @@ def _build_schema_to_operations_index(
 
 
 def compare(base: OpenAPIParser, head: OpenAPIParser) -> APIDiff:
-    """Compare two OpenAPI specs and return a structured diff."""
+    """Compare two OpenAPI documents.
+
+    Args:
+        base: Parser containing the original OpenAPI document.
+        head: Parser containing the updated OpenAPI document.
+
+    Returns:
+        The structured changes needed to move from ``base`` to ``head``.
+    """
     base_ops = {(path, str(method)): op for path, method, op in base.endpoints}
     head_ops = {(path, str(method)): op for path, method, op in head.endpoints}
 
@@ -566,7 +649,14 @@ def compare(base: OpenAPIParser, head: OpenAPIParser) -> APIDiff:
 
 
 def to_json(diff: APIDiff) -> str:
-    """Serialize an APIDiff to a JSON string."""
+    """Serialize an API diff as JSON.
+
+    Args:
+        diff: Structured API diff to serialize.
+
+    Returns:
+        An indented JSON representation of the diff.
+    """
     return diff.model_dump_json(indent=2)
 
 
@@ -575,7 +665,17 @@ def _get_markdown_heading(level: int) -> str:
 
 
 def to_markdown(diff: APIDiff, *, heading_level: int = 1) -> str:
-    """Render an APIDiff as a human-readable Markdown string."""
+    """Render an API diff as human-readable Markdown.
+
+    Args:
+        diff: Structured API diff to render.
+        heading_level: Heading level for the Operations and Schemas sections.
+            Values outside the range 1 through 6 are clamped to that range.
+
+    Returns:
+        A Markdown representation of the diff, or an empty string when the
+        documents have no differences.
+    """
     lines: list[str] = []
 
     _ICONS = {

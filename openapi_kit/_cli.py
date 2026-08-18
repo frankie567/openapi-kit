@@ -6,8 +6,8 @@ import sys
 
 import click
 
-from ._diff import compare, to_json, to_markdown
 from ._parser import OpenAPIParser
+from .diff import compare, to_json, to_markdown
 from .tui.app import OpenAPITUIApp
 
 

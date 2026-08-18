@@ -62,3 +62,4 @@ nav:
     - About: index.md
     - Reference:
           - openapi_kit: reference/openapi_kit.md
+          - diff: reference/diff.md
