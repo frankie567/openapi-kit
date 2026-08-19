@@ -123,7 +123,19 @@ class OpenAPIParser:
             raw = _load_from_url(source)
         else:
             raw = _load_from_file(source)
-        spec = parse_obj(raw)
+        return cls.from_dict(raw)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, typing.Any]) -> typing.Self:
+        """Load an OpenAPI document from a dictionary.
+
+        Args:
+            data: Dictionary containing the OpenAPI document.
+
+        Returns:
+            A parser containing the validated OpenAPI document.
+        """
+        spec = parse_obj(data)
         return cls(spec)
 
     @property
