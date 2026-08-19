@@ -12,8 +12,8 @@ from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Markdown, Static, Tree
 
-from openapi_kit._parser import NamedSchema, OpenAPIParser, Schema
 from openapi_kit.diff import ChangeType, SchemaPropertyChange
+from openapi_kit.parser import NamedSchema, OpenAPIParser, Schema
 from openapi_kit.tui._diff_service import DiffService
 
 _REFERENCE_TYPES = (_v30.Reference, _v31.Reference)

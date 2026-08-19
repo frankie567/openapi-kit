@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from openapi_kit._parser import Endpoint, OpenAPIParser
 from openapi_kit.diff import (
     APIDiff,
     ChangeType,
@@ -11,6 +10,7 @@ from openapi_kit.diff import (
     SchemaPropertyChange,
     compare,
 )
+from openapi_kit.parser import Endpoint, OpenAPIParser
 
 
 class DiffService:

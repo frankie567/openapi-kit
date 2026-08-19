@@ -6,8 +6,8 @@ import sys
 
 import click
 
-from openapi_kit._parser import OpenAPIParser
 from openapi_kit.diff import compare, to_json, to_markdown
+from openapi_kit.parser import OpenAPIParser
 from openapi_kit.tui.app import OpenAPITUIApp
 
 

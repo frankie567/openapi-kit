@@ -6,7 +6,8 @@ from textual.app import ComposeResult
 from textual.widget import Widget
 from textual.widgets import Markdown, Static, TabbedContent, TabPane
 
-from openapi_kit._parser import (
+from openapi_kit.diff import ChangeType
+from openapi_kit.parser import (
     Endpoint,
     Method,
     OpenAPIParser,
@@ -16,7 +17,6 @@ from openapi_kit._parser import (
     Responses,
     Schema,
 )
-from openapi_kit.diff import ChangeType
 from openapi_kit.tui._diff_service import DiffService
 from openapi_kit.tui._utils import get_method_color
 

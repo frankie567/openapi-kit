@@ -1,4 +1,4 @@
-from openapi_kit._parser import Method
+from openapi_kit.parser import Method
 
 
 def get_method_color(method: Method) -> str:

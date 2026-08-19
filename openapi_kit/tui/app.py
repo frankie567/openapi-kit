@@ -3,7 +3,7 @@ import os
 from textual.app import App
 from textual.binding import Binding
 
-from openapi_kit._parser import OpenAPIParser
+from openapi_kit.parser import OpenAPIParser
 from openapi_kit.tui._diff_service import DiffService
 from openapi_kit.tui.screens.endpoints import EndpointsScreen
 from openapi_kit.tui.screens.schemas import SchemasScreen

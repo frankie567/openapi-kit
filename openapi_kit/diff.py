@@ -9,7 +9,7 @@ import openapi_pydantic.v3.v3_0 as _v30
 import openapi_pydantic.v3.v3_1 as _v31
 from pydantic import BaseModel
 
-from openapi_kit._parser import OpenAPIParser
+from openapi_kit.parser import OpenAPIParser
 
 _REFERENCE_TYPES = (_v30.Reference, _v31.Reference)
 _PARAMETER_TYPES = (_v30.Parameter, _v31.Parameter)

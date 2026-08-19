@@ -5,7 +5,7 @@ from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Tree
 
-from openapi_kit._parser import Endpoint, Method, OpenAPIParser
+from openapi_kit.parser import Endpoint, Method, OpenAPIParser
 from openapi_kit.tui._diff_service import DiffService
 from openapi_kit.tui._utils import get_method_color
 

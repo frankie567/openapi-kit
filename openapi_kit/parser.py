@@ -1,3 +1,5 @@
+"""Public API for parsing and navigating OpenAPI documents."""
+
 import functools
 import json
 import pathlib
@@ -14,14 +16,37 @@ OpenAPI = _v30.OpenAPI | _v31.OpenAPI
 Operation = _v30.Operation | _v31.Operation
 Schema = _v30.Schema | _v31.Schema
 Parameter = _v30.Parameter | _v31.Parameter
+"""An OpenAPI 3.0 or 3.1 operation parameter."""
+
 Reference = _v30.Reference | _v31.Reference
+"""An OpenAPI 3.0 or 3.1 reference."""
+
 RequestBody = _v30.RequestBody | _v31.RequestBody
+"""An OpenAPI 3.0 or 3.1 request body."""
+
 Responses = _v30.Responses | _v31.Responses
+"""An OpenAPI 3.0 or 3.1 responses mapping."""
+
 Response = _v30.Response | _v31.Response
+"""An OpenAPI 3.0 or 3.1 response."""
+
 Info = _v30.Info | _v31.Info
 
 
 class Method(StrEnum):
+    """HTTP method supported by an OpenAPI operation.
+
+    Attributes:
+        GET: Retrieve a resource.
+        POST: Submit data to a resource.
+        PUT: Replace a resource.
+        PATCH: Partially update a resource.
+        DELETE: Delete a resource.
+        HEAD: Retrieve response headers for a resource.
+        OPTIONS: Retrieve communication options for a resource.
+        TRACE: Perform a message loop-back test.
+    """
+
     GET = "get"
     POST = "post"
     PUT = "put"
@@ -33,7 +58,10 @@ class Method(StrEnum):
 
 
 type Endpoint = tuple[str, Method, Operation]
+"""An endpoint represented by its path, HTTP method, and operation."""
+
 type NamedSchema = tuple[str, Schema | Reference]
+"""A component schema represented by its name and schema or reference."""
 
 
 def _load_from_url(url: str) -> dict[str, typing.Any]:
@@ -63,12 +91,32 @@ def _param_key(
 
 
 class OpenAPIParser:
+    """Parser for navigating an OpenAPI document.
+
+    Args:
+        openapi: Parsed OpenAPI 3.0 or 3.1 document.
+
+    Attributes:
+        openapi: Parsed OpenAPI document exposed by the parser.
+    """
+
     def __init__(self, openapi: OpenAPI) -> None:
         self.openapi = openapi
 
     @classmethod
     def from_source(cls, source: str | pathlib.Path) -> typing.Self:
-        """Load an OpenAPI spec from a file path or URL."""
+        """Load an OpenAPI document from a file path or URL.
+
+        JSON and YAML documents are supported. String sources beginning with
+        ``http://`` or ``https://`` are treated as URLs; all other sources are
+        treated as local file paths.
+
+        Args:
+            source: Local file path or HTTP(S) URL of the OpenAPI document.
+
+        Returns:
+            A parser containing the validated OpenAPI document.
+        """
         if isinstance(source, pathlib.Path):
             raw = _load_from_file(str(source))
         elif source.startswith("http://") or source.startswith("https://"):
@@ -80,12 +128,23 @@ class OpenAPIParser:
 
     @property
     def info(self) -> Info:
-        """Return the Info object from the OpenAPI spec."""
+        """Return metadata from the OpenAPI document.
+
+        Returns:
+            The document's Info object.
+        """
         return self.openapi.info
 
     @functools.cached_property
     def endpoints(self) -> list[Endpoint]:
-        """Return a list of all endpoints in the spec as (path, method, operation) tuples."""
+        """Return the endpoints in the OpenAPI document.
+
+        Path-level parameters are merged into each operation unless overridden
+        by an operation-level parameter with the same name.
+
+        Returns:
+            Tuples containing the path, HTTP method, and operation.
+        """
         endpoints: list[Endpoint] = []
         paths = self.openapi.paths or {}
 
@@ -124,14 +183,29 @@ class OpenAPIParser:
 
     @functools.cached_property
     def schemas(self) -> list[NamedSchema]:
-        """Return a list of all schemas in the spec as (name, schema) tuples."""
+        """Return the component schemas in the OpenAPI document.
+
+        Returns:
+            Tuples containing the schema name and its schema or reference.
+        """
         components = self.openapi.components
         if not components or not components.schemas:
             return []
         return list(components.schemas.items())
 
     def resolve_reference(self, ref: Reference) -> typing.Any:
-        """Resolve a Reference object to its actual value."""
+        """Resolve a component reference.
+
+        Args:
+            ref: OpenAPI reference to resolve.
+
+        Returns:
+            The referenced component.
+
+        Raises:
+            ValueError: If the reference format is unsupported or the target
+                component does not exist.
+        """
         ref_path = ref.ref.split("/")
         if len(ref_path) < 3 or ref_path[0] != "#" or ref_path[1] != "components":
             raise ValueError(f"Unsupported reference format: {ref.ref}")  # noqa: TRY003
@@ -150,7 +224,17 @@ class OpenAPIParser:
         return resolved
 
     def get_referenced[T](self, item: Reference | T) -> T:
-        """If the item is a Reference, resolve it; otherwise return it as-is."""
+        """Resolve an item when it is a reference.
+
+        Args:
+            item: Reference to resolve or concrete value to return unchanged.
+
+        Returns:
+            The resolved reference or the original concrete value.
+
+        Raises:
+            ValueError: If a reference cannot be resolved.
+        """
         if isinstance(item, Reference):
             return self.resolve_reference(item)
         return item
