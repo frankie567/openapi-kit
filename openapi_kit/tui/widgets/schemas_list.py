@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import typing
 from typing import Any, Protocol, runtime_checkable
 
 import openapi_pydantic.v3.v3_0 as _v30
 import openapi_pydantic.v3.v3_1 as _v31
 from textual.app import ComposeResult
-from textual.binding import Binding
+from textual.binding import Binding, BindingType
 from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Markdown, Static, Tree
@@ -273,7 +274,7 @@ class SchemaDetail(Widget):
 
     can_focus = True
 
-    BINDINGS = [
+    BINDINGS: typing.ClassVar[list[BindingType]] = [
         Binding("b", "back", "← Back", show=False),
     ]
 

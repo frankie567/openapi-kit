@@ -14,6 +14,7 @@ async def generate() -> None:
     sys.path.insert(0, str(Path(__file__).parent.parent))
 
     from openapi_kit._parser import OpenAPIParser
+
     from openapi_kit.tui.app import OpenAPITUIApp
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

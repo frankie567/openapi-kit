@@ -1,7 +1,8 @@
 import os
+import typing
 
 from textual.app import App
-from textual.binding import Binding
+from textual.binding import Binding, BindingType
 
 from openapi_kit.parser import OpenAPIParser
 from openapi_kit.tui._diff_service import DiffService
@@ -14,7 +15,7 @@ class OpenAPITUIApp(App[None]):
 
     TITLE = "openapi-tui"
 
-    BINDINGS = [
+    BINDINGS: typing.ClassVar[list[BindingType]] = [
         Binding("ctrl+c,q", "quit", "Quit", priority=True),
         Binding("e", "switch_mode('endpoints')", "Endpoints", show=True),
         Binding("s", "switch_mode('schemas')", "Schemas", show=True),
@@ -64,9 +65,7 @@ class OpenAPITUIApp(App[None]):
             return
 
         for screen in self.screen_stack:
-            if isinstance(screen, EndpointsScreen):
-                screen.reload(self.openapi)
-            elif isinstance(screen, SchemasScreen):
+            if isinstance(screen, EndpointsScreen | SchemasScreen):
                 screen.reload(self.openapi)
 
         self.notify("Schema reloaded", severity="information")
@@ -79,7 +78,5 @@ class OpenAPITUIApp(App[None]):
 
         # Refresh current screen to apply filtering
         for screen in self.screen_stack:
-            if isinstance(screen, EndpointsScreen):
-                screen.apply_diff_filtering()
-            elif isinstance(screen, SchemasScreen):
+            if isinstance(screen, EndpointsScreen | SchemasScreen):
                 screen.apply_diff_filtering()

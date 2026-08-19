@@ -82,7 +82,7 @@ class EndpointsList(Widget):
 
         endpoints_by_tag: defaultdict[str, list[Endpoint]] = defaultdict(list)
         for endpoint in self.openapi.endpoints:
-            path, method, operation = endpoint
+            _, _, operation = endpoint
             for tag in operation.tags or ["default"]:
                 endpoints_by_tag[tag].append(endpoint)
 

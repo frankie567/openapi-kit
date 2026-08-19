@@ -1,3 +1,5 @@
+import contextlib
+
 from textual.app import ComposeResult
 from textual.containers import Container
 from textual.screen import Screen
@@ -61,10 +63,8 @@ class EndpointsScreen(Screen[None]):
         self.call_after_refresh(panel.focus)
 
     def on_schema_detail_panel_closed(self, _event: SchemaDetail.PanelClosed) -> None:
-        try:
+        with contextlib.suppress(Exception):
             self.query_one(EndpointDetail).focus()
-        except Exception:
-            pass
 
     def on_endpoints_list_endpoint_selected(
         self, event: EndpointsList.EndpointSelected

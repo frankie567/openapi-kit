@@ -119,7 +119,7 @@ class OpenAPIParser:
         """
         if isinstance(source, pathlib.Path):
             raw = _load_from_file(str(source))
-        elif source.startswith("http://") or source.startswith("https://"):
+        elif source.startswith(("http://", "https://")):
             raw = _load_from_url(source)
         else:
             raw = _load_from_file(source)
@@ -253,13 +253,13 @@ class OpenAPIParser:
 
 
 __all__ = [
-    "OpenAPIParser",
     "Endpoint",
-    "Parameter",
-    "Reference",
     "Method",
     "NamedSchema",
+    "OpenAPIParser",
+    "Parameter",
+    "Reference",
     "RequestBody",
-    "Responses",
     "Response",
+    "Responses",
 ]

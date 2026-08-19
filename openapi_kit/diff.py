@@ -233,21 +233,22 @@ def _compare_parameter_fields(
             )
     base_schema = base.param_schema
     head_schema = head.param_schema
-    if isinstance(base_schema, _SCHEMA_TYPES) and isinstance(
-        head_schema, _SCHEMA_TYPES
+    if (
+        isinstance(base_schema, _SCHEMA_TYPES)
+        and isinstance(head_schema, _SCHEMA_TYPES)
+        and base_schema.type != head_schema.type
     ):
-        if base_schema.type != head_schema.type:
-            changes.append(
-                FieldChange(
-                    field="schema.type",
-                    old_value=str(base_schema.type)
-                    if base_schema.type is not None
-                    else None,
-                    new_value=str(head_schema.type)
-                    if head_schema.type is not None
-                    else None,
-                )
+        changes.append(
+            FieldChange(
+                field="schema.type",
+                old_value=str(base_schema.type)
+                if base_schema.type is not None
+                else None,
+                new_value=str(head_schema.type)
+                if head_schema.type is not None
+                else None,
             )
+        )
     return changes
 
 
